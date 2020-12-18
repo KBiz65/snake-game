@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake Game</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=IBM+Plex+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link href="snake.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="header-container">
+      <img src="" alt="" />
+      <div id="score-container">
+        <p id="score-text">Score:</p>
+        <div id="score-number">
+          <!-- the score will display here -->
+        </div>
+      </div>
+    </div>
+    <canvas id="game-canvas" width="900" height="600"></canvas>
+    <div class="directions-container">
+      <p class="directions-text">Directions:</p>
+      <p class="directions-text">Use arrow keys to guide snake.</p>
+      <p class="direction-text">
+        Game ends when snake touches itself or the border
+      </p>
+    </div>
+    <script src="snake.js"></script>
+  </body>
+</html>

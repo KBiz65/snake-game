@@ -1,7 +1,8 @@
 const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d');
-let snakePositionX = 460;
-let snakePositionY = 300;
+const scoreDisplay = document.getElementById('score-number');
+let snakePositionX = Math.floor(Math.random() * (900 / 10)) * 10;
+let snakePositionY = Math.floor(Math.random() * (600 / 10)) * 10;
 const snakeBodySize = 10;
 let snakeSpeed = 10;
 let snakeSpeedPositive = true;
@@ -10,8 +11,8 @@ let movingOnY = false;
 let snakeBodyArray = [{ x: snakePositionX, y: snakePositionY }];
 let appleCount = 0;
 const appleSize = 10;
-let applePositionX = 0;
-let applePositionY = 0;
+let applePositionX = Math.floor(Math.random() * (900 / 10)) * 10;
+let applePositionY = Math.floor(Math.random() * (600 / 10)) * 10;;
 
 window.onload = function () {
   const framesPerSecond = 10;
@@ -26,23 +27,22 @@ document.addEventListener('keydown', checkKey);
 
 function gameMovement() {
   if (movingOnX) {
-    console.log("snakePositionX: ", snakePositionX);
-    console.log("snakePositionY: ", snakePositionY);
     if (snakePositionX >= 0+snakeBodySize && snakePositionX <= canvas.width-snakeBodySize) {
       snakePositionX += snakeSpeed;
       updateSnakeBodyArray();
       drawSnake();
+      updateScore();
     } else {
       gameOver();
     }
   }
   if (movingOnY) {
-    console.log("snakePositionX: ", snakePositionX);
-    console.log("snakePositionY: ", snakePositionY);
+
     if (snakePositionY >= 0 + snakeBodySize && snakePositionY <= canvas.height - snakeBodySize) {
       snakePositionY += snakeSpeed;
       updateSnakeBodyArray();
       drawSnake();
+      updateScore();
     } else {
       gameOver();
     }
@@ -72,9 +72,16 @@ function drawSnake() {
   }
 }
 
-function getRandomXY() {
+function updateScore() {
+  if (snakePositionX === applePositionX && snakePositionY === applePositionY) {
+    scoreDisplay.textContent = appleCount;
+  }
+}
+
+function getRandom() {
   applePositionX = Math.floor(Math.random() * (900 / 10)) * 10;
   applePositionY = Math.floor(Math.random() * (600 / 10)) * 10;
+  return 
   
 }
 
@@ -86,7 +93,7 @@ function drawApple() {
 }
 
 function checkKey(e) {
-  console.log(e.key);
+  // console.log(e.key);
   if (e.key === 'ArrowUp') {
     movingOnX = false;
     movingOnY = true;

@@ -26,12 +26,33 @@ html {
 
 body {
   display: flex;
-  width: 62.5%;
+  width: 900px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.header-container {
+  width: 900px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 #game-canvas {
   border: 2px solid #389e0d;
+}
+
+#score-container {
+  background: #092b00;
+  color: white;
+}
+
+#score-number {
+  font-family: "IMB Plex Mono", monospace;
+  font-size: 2.4rem;
+  line-height: 3.1rem;
+  text-align: end;
 }

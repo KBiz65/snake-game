@@ -1,6 +1,6 @@
 const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d');
-let snakePositionX = 450;
+let snakePositionX = 460;
 let snakePositionY = 300;
 const snakeBodySize = 10;
 let snakeSpeed = 10;
@@ -9,27 +9,31 @@ let movingOnX = true;
 let movingOnY = false;
 let snakeBodyArray = [{ x: snakePositionX, y: snakePositionY }];
 let appleCount = 0;
+const appleSize = 10;
+let applePositionX = 0;
+let applePositionY = 0;
 
 window.onload = function () {
   const framesPerSecond = 10;
   setInterval(function () {
     drawGame();
     gameMovement();
-  }, 1000 / framesPerSecond);
+    drawApple();
+  }, 2000 / framesPerSecond);
 }
 
-window.addEventListener('keydown', checkKey);
+document.addEventListener('keydown', checkKey);
 
 function gameMovement() {
   if (movingOnX) {
+    console.log("snakePositionX: ", snakePositionX);
+    console.log("snakePositionY: ", snakePositionY);
     if (snakePositionX >= 0+snakeBodySize && snakePositionX <= canvas.width-snakeBodySize) {
       snakePositionX += snakeSpeed;
       updateSnakeBodyArray();
       drawSnake();
     } else {
-      canvasContext.fillStyle = 'white';
-      canvasContext.fillText("Game over", 425, 300);
-      return;
+      gameOver();
     }
   }
   if (movingOnY) {
@@ -40,9 +44,7 @@ function gameMovement() {
       updateSnakeBodyArray();
       drawSnake();
     } else {
-      canvasContext.fillStyle = 'white';
-      canvasContext.fillText("Game over", 425, 300);
-      return
+      gameOver();
     }
   }
 }
@@ -63,13 +65,24 @@ function updateSnakeBodyArray() {
 }
 
 function drawSnake() {
-  console.log("drawSnake function called");
   for (i = 0; i < snakeBodyArray.length; i++) {
-    console.log(snakeBodyArray[i]["x"]);
     snakePositionX = snakeBodyArray[i]["x"];
     snakePositionY = snakeBodyArray[i]["y"];
     colorCircle(snakePositionX, snakePositionY, snakeBodySize, "lightgreen");
   }
+}
+
+function getRandomXY() {
+  applePositionX = Math.floor(Math.random() * (900 / 10)) * 10;
+  applePositionY = Math.floor(Math.random() * (600 / 10)) * 10;
+  
+}
+
+function drawApple() {
+  if (applePositionX === 0 && applePositionY === 0) {
+    getRandomXY()
+  }
+  colorCircle(applePositionX, applePositionY, appleSize, "red");
 }
 
 function checkKey(e) {
@@ -125,4 +138,10 @@ function colorCircle(centerX, centerY, radius, drawColor) {
   canvasContext.beginPath();
   canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
   canvasContext.fill();
+}
+
+function gameOver() {
+  canvasContext.fillStyle = 'white';
+  canvasContext.fillText("Game over", 425, 300);
+  return;
 }

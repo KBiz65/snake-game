@@ -15,7 +15,9 @@ let appleX = getRandomX();
 let appleY = getRandomY();
 let isGameOver = false;
 
-window.onload = function () {
+startGame();
+
+function startGame() {
   const framesPerSecond = 10;
   setInterval(function () {
     if (!isGameOver) {
@@ -26,9 +28,10 @@ window.onload = function () {
   }, 1000 / framesPerSecond);
 }
 
-document.addEventListener('keydown', getDirection);
+document.addEventListener('keydown', getKeypress);
 
-function getDirection(e) {
+function getKeypress(e) {
+  console.log(e.keyCode);
   if (e.key === 'ArrowUp') {
     movingOnX = false;
     movingOnY = true;
@@ -57,12 +60,18 @@ function getDirection(e) {
   }
   
   else if (e.key === 'ArrowRight') {
+    console.log("recognized code for arrow right");
     movingOnX = true;
     movingOnY = false;
     if (!snakeSpeedPositive) {
       snakeSpeed = -snakeSpeed;
       snakeSpeedPositive = true;
     }
+  }
+
+  else if (e.key == " ") {
+    console.log("recognized code 32 - running code");
+    location.reload();
   }
 }
 
@@ -152,8 +161,8 @@ function updateScore() {
 function gameOver() {
   canvasContext.fillStyle = 'white';
   canvasContext.fillText("Game over", 425, 300);
+  canvasContext.fillText("Press spacebar to try again", 390, 320);
   isGameOver = true;
-  return;
 }
 
 function colorRectangle(leftX, topY, width, height, drawColor) {

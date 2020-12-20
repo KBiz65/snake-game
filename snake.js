@@ -137,7 +137,7 @@ function drawApple() {
   colorCircle(appleX, appleY, appleSize, "red");
 }
 
-function drawNewApple() {
+function newAppleXY() {
   appleX = getRandomX();
   appleY = getRandomY();
   colorCircle(appleX, appleY, appleSize, "red");
@@ -146,7 +146,7 @@ function drawNewApple() {
 function updateScore() {
     appleCount++;
     scoreDisplay.textContent = "0".repeat([10 - (appleCount.toString).length]) + appleCount.toString();
-    drawNewApple();
+    newAppleXY();
 }
 
 function gameOver() {

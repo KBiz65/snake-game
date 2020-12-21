@@ -14,24 +14,23 @@ const appleSize = 10;
 let appleX = getRandomX();
 let appleY = getRandomY();
 let isGameOver = false;
+let intervalTime = 2000;
+let framesPerSecond = 10;
+let refreshInterval = setInterval(startGame, intervalTime / framesPerSecond);
 
 startGame();
 
 function startGame() {
-  const framesPerSecond = 10;
-  setInterval(function () {
-    if (!isGameOver) {
-      drawGame();
-      gameMovement();
-      drawApple();
-    }
-  }, 1000 / framesPerSecond);
+  if (!isGameOver) {
+    drawGame();
+    gameMovement();
+    drawApple();
+  }
 }
 
 document.addEventListener('keydown', getKeypress);
 
 function getKeypress(e) {
-  console.log(e.keyCode);
   if (e.key === 'ArrowUp') {
     movingOnX = false;
     movingOnY = true;
@@ -60,7 +59,6 @@ function getKeypress(e) {
   }
   
   else if (e.key === 'ArrowRight') {
-    console.log("recognized code for arrow right");
     movingOnX = true;
     movingOnY = false;
     if (!snakeSpeedPositive) {
@@ -70,7 +68,6 @@ function getKeypress(e) {
   }
 
   else if (e.key == " ") {
-    console.log("recognized code 32 - running code");
     location.reload();
   }
 }
@@ -149,13 +146,27 @@ function drawApple() {
 function newAppleXY() {
   appleX = getRandomX();
   appleY = getRandomY();
-  colorCircle(appleX, appleY, appleSize, "red");
+
+  for (let i = 0; i < snakeBody.length; i++) {
+    if (appleX === snakeBody[i]["x"] && appleY === snakeBody[i]["y"]) {
+      newAppleXY();
+    } else {
+      colorCircle(appleX, appleY, appleSize, "red");
+    }
+  }
 }
 
 function updateScore() {
-    appleCount++;
-    scoreDisplay.textContent = "0".repeat([10 - (appleCount.toString).length]) + appleCount.toString();
-    newAppleXY();
+  appleCount++;
+  scoreDisplay.textContent = "0".repeat([10 - (appleCount.toString).length]) + appleCount.toString();
+  speedUp();
+  newAppleXY();
+}
+
+function speedUp() {
+  clearInterval(refreshInterval);
+  framesPerSecond += 1;
+  refreshInterval = setInterval(startGame, intervalTime / framesPerSecond);
 }
 
 function gameOver() {
